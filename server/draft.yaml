@@ -1,0 +1,8 @@
+models: 
+  Products: 
+    SKU: string unique
+    name: string
+    quantity: decimal:8,2
+    price: decimal:8,2
+    description: longtext
+    image: longtext
