@@ -42,7 +42,10 @@ class JwtAuthController extends Controller
         $validator = Validator::make($request->all(), [
             'name' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:users',
+            'telephone' => 'required|integer',
+            'username' => 'required|string|unique:users',
             'password' => 'required|string|min:6|confirmed',
+            'date_of_birth' => 'required|string',
         ]);
 
         if ($validator->fails()) {
@@ -52,7 +55,10 @@ class JwtAuthController extends Controller
         $user = User::create([
             'name' => $request->get('name'),
             'email' => $request->get('email'),
+            'telephone' => $request->get('telephone'),
+            'username' => $request->get('username'),
             'password' => Hash::make($request->get('password')),
+            'date_of_birth' => $request->get('date_of_birth'),
         ]);
 
         $token = JWTAuth::fromUser($user);
@@ -65,5 +71,9 @@ class JwtAuthController extends Controller
         $token->revoke();
         $response = ['message' => 'You have been successfully logged out!'];
         return response($response, 200);
+    }
+    public function refresh()
+    {
+        return $this->respondWithToken(auth()->refresh());
     }
 }

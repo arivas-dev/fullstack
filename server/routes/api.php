@@ -21,10 +21,14 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('product/{product}','ProductController@show')->name('api.v1.products.show');
 
-
+//PRODUCTS ROUTE
 Route::group(['middleware' => ['jwt.verify']], function() {
-    /*AÑADE AQUI LAS RUTAS QUE QUIERAS PROTEGER CON JWT*/
     Route::get('products','ProductController@index')->name('api.v1.products.index');
+});
+
+// USER ROUTES
+Route::group(['middleware' => ['jwt.verify']], function() {
+    Route::put('user','UserController@update')->name('api.v1.update.update');
 });
 
 
