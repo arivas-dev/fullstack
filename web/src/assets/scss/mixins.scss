@@ -1,0 +1,19 @@
+@import './variables.scss';
+
+@mixin small {
+  @media (max-width: $small) {
+    @content;
+  }
+}
+
+@mixin medium {
+  @media (max-width: $medium) {
+    @content;
+  }
+}
+
+@mixin large {
+  @media (max-width: $large) {
+    @content;
+  }
+}

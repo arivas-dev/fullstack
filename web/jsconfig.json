@@ -1,0 +1,9 @@
+{
+  "compilerOptions": {
+    "baseUrl": "src",
+    "rootDir": ".",
+    "moduleResolution": "node",
+    "target": "es2019"
+  },
+  "exclude": ["/node_modules"]
+}
