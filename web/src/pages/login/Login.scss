@@ -1,0 +1,66 @@
+@import 'src/assets/scss/mixins';
+@import 'src/assets/scss/variables';
+
+.login {
+  position: fixed;
+  border-radius: 10px;
+  top: 50%;
+  left: 50%;
+  transform: translateX(-50%) translateY(-50%);
+  width: 625px;
+  max-width: 95%;
+  height: 500px;
+  padding: 1em 2em;
+  background: rgba($color: $light, $alpha: 0.8);
+  color: $dark;
+  display: table;
+  table-layout: fixed;
+  color: $dark;
+
+  &-bg {
+    position: fixed;
+    background: $dark;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+  }
+
+  &-picture, &-inputs {
+    display: table-cell;
+    vertical-align: top;
+    width: 50%;
+  }
+
+  &-picture {
+    text-align: center;
+    & > img {
+      margin-top: 5em;
+      max-width: 70%;
+    }
+  }
+
+  &-inputs {
+    text-align: center;
+  }
+
+  &-title {
+    font-weight: bold;
+    margin-top: 1em;
+    font-size: 26px;
+    text-align: center;
+  }
+
+  &-input-group {
+    margin: .7em 0;
+    text-align: left;
+    & > label {
+      display: inline-block;
+      margin: .4em 0;
+    }
+  }
+
+  &-forgot {
+    text-align: left;
+  }
+}

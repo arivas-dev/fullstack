@@ -1,13 +1,21 @@
-import logo from './logo.svg';
+import { Spin } from 'antd';
+import { SystemRoutes } from 'components/SytemRoutes/SystemRoutes';
+import { BrowserRouter as Router, Switch } from 'react-router-dom';
+import React, { Suspense } from 'react';
 import './App.css';
-import Login from './pages/Login'
 import 'bulma/css/bulma.css'
+
+const Loading = () => <Spin tip="Please wait..." size="large" />
 
 function App() {
   return (
-    <div className="App">
-      <Login />
-    </div>
+    <Suspense fallback={<Loading />}>
+      <Router>
+        <Switch>
+          <SystemRoutes />
+        </Switch>
+      </Router>
+    </Suspense>
   );
 }
 
