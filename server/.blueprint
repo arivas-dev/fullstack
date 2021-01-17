@@ -1,6 +1,6 @@
 created:
     - database/factories/ProductsFactory.php
-    - database/migrations/2021_01_15_022540_create_products_table.php
+    - database/migrations/2021_01_16_050142_create_products_table.php
     - app/Models/Products.php
 models:
     Products: { SKU: 'string unique', name: string, quantity: 'decimal:8,2', price: 'decimal:8,2', description: longtext, image: longtext }

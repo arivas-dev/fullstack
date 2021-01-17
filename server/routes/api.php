@@ -19,18 +19,27 @@ use Illuminate\Support\Facades\Route;
 //     return $request->user();
 // });
 
-Route::get('product/{product}','ProductController@show')->name('api.v1.products.show');
 
 //PRODUCTS ROUTE
 Route::group(['middleware' => ['jwt.verify']], function() {
+    Route::get('products/{product}','ProductController@show')->name('api.v1.products.show');
     Route::get('products','ProductController@index')->name('api.v1.products.index');
     Route::post('products','ProductController@store')->name('api.v1.products.store');
     Route::patch('products/{id}','ProductController@update')->name('api.v1.products.update');
+    Route::delete('products/{id}','ProductController@delete')->name('api.v1.products.delete');
 });
 
 // USER ROUTES
 Route::group(['middleware' => ['jwt.verify']], function() {
-    Route::put('user','UserController@update')->name('api.v1.update.update');
+    Route::patch('user/{id}','UserController@update')->name('api.v1.update.update');
+});
+
+// USER ROUTES
+Route::group(['middleware' => ['jwt.verify']], function() {
+    Route::put('user','UserController@update')->name('api.v1.user.update');
+    Route::get('user','UserController@index')->name('api.v1.users.index');
+    Route::get('user/{id}','UserController@show')->name('api.v1.user.show');
+    Route::delete('user/{id}','UserController@delete')->name('api.v1.products.delete');
 });
 
 

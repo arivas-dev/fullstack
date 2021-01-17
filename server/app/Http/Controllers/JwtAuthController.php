@@ -24,7 +24,7 @@ class JwtAuthController extends Controller
         ]);
 
         if ($validator->fails()) {
-            return response()->json($validator->errors()->toJson(), 403);
+            return response()->json($validator->errors(), 403);
         }
 
         try {
@@ -72,5 +72,9 @@ class JwtAuthController extends Controller
         $token->revoke();
         $response = ['message' => 'You have been successfully logged out!'];
         return response($response, 200);
+    }
+    public function refresh()
+    {
+        return $this->respondWithToken(auth()->refresh());
     }
 }

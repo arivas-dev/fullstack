@@ -56,37 +56,60 @@ class ProductController extends Controller
 
         return response()->json([
             "message" => "Product created"
-          ], 201);
+        ], 201);
     }
 
-    public function update(Request $request,$id)
+    public function update(Request $request, $id)
     {
-        $validator = Validator::make($request->all(), [
-            'SKU' => 'required|string|max:255|unique:products',
-            'name' => 'required|string|max:255',
-            'quantity' => 'required|string',
-            'price' => 'required|string',
-            'description' => 'required|string',
-            'image' => 'required|string',
-        ]);
+        if (Products::where('id', $id)->exists()) {
+            $validator = Validator::make($request->all(), [
+                'SKU' => 'required|string|max:255|unique:products',
+                'name' => 'required|string|max:255',
+                'quantity' => 'required|string',
+                'price' => 'required|string',
+                'description' => 'required|string',
+                'image' => 'required|string',
+            ]);
 
-        if ($validator->fails()) {
-            return response()->json($validator->errors(), 400);
+            if ($validator->fails()) {
+                return response()->json($validator->errors(), 400);
+            }
+
+            $product = Products::find($id);
+
+            $product->SKU = $request->get('SKU');
+            $product->name = $request->get('name');
+            $product->quantity = $request->get('quantity');
+            $product->price = $request->get('price');
+            $product->description = $request->get('description');
+            $product->image = $request->get('image');
+
+            $product->save();
+
+            return response()->json([
+                "message" => "Product updated"
+            ], 200);
+        } else {
+            return response()->json([
+                "message" => "Product not found"
+            ], 404);
         }
+    }
+    public function delete(Request $request, $id)
+    {
+        if (Products::where('id', $id)->exists()) {
 
-        $userToEdit = User::find($id);
 
-        $userToEdit->SKU = $request->get('SKU');
-        $userToEdit->name = $request->get('name');
-        $userToEdit->quantity = $request->get('quantity');
-        $userToEdit->price = $request->get('price');
-        $userToEdit->description = $request->get('description');
-        $userToEdit->image = $request->get('image');
+            $product = Products::find($id);
 
-        $userToEdit->save();
-
-        return response()->json([
-            "message" => "Product updated"
-          ], 200);
+            $product->delete();
+            return response()->json([
+                "message" => "Product deleted"
+            ], 202);
+        } else {
+            return response()->json([
+                "message" => "Product not found"
+            ], 404);
+        }
     }
 }
