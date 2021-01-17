@@ -73,4 +73,8 @@ class JwtAuthController extends Controller
         $response = ['message' => 'You have been successfully logged out!'];
         return response($response, 200);
     }
+    public function refresh()
+    {
+        return $this->respondWithToken(auth()->refresh());
+    }
 }

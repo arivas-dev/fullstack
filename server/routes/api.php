@@ -33,6 +33,11 @@ Route::group(['middleware' => ['jwt.verify']], function() {
     Route::put('user','UserController@update')->name('api.v1.update.update');
 });
 
+// USER ROUTES
+Route::group(['middleware' => ['jwt.verify']], function() {
+    Route::put('user','UserController@update')->name('api.v1.update.update');
+});
+
 
 
 

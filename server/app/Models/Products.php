@@ -2,10 +2,8 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\Str;
 
 class Products extends Model
 {
@@ -37,7 +35,6 @@ class Products extends Model
         'quantity' => 'decimal:2',
         'price' => 'decimal:2',
     ];
-
     public function scopeApplySorts(Builder $query,$sort){
         $sortFields = Str::of($sort)->explode(',');
 
