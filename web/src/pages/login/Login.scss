@@ -7,14 +7,14 @@
   top: 50%;
   left: 50%;
   transform: translateX(-50%) translateY(-50%);
-  width: 625px;
+  width: 700px;
   max-width: 95%;
+  margin: auto;
   height: 500px;
   padding: 1em 2em;
   background: rgba($color: $light, $alpha: 0.8);
   color: $dark;
-  display: table;
-  table-layout: fixed;
+  display: block;
   color: $dark;
 
   &-bg {
@@ -27,27 +27,31 @@
   }
 
   &-picture, &-inputs {
-    display: table-cell;
-    vertical-align: top;
+    display: inline-block;
     width: 50%;
   }
 
   &-picture {
     text-align: center;
+    position: relative;
     & > img {
-      margin-top: 5em;
-      max-width: 70%;
+      top: 10px;
+      max-width: 100%;
     }
   }
 
   &-inputs {
-    text-align: center;
+    .button {
+      margin: .5em 0;
+      width: 150px;
+    }
   }
 
   &-title {
+    font-family: Monserrat, sans-serif;
     font-weight: bold;
     margin-top: 1em;
-    font-size: 26px;
+    font-size: 28px;
     text-align: center;
   }
 
@@ -55,12 +59,30 @@
     margin: .7em 0;
     text-align: left;
     & > label {
+      font-family: Roboto;
       display: inline-block;
       margin: .4em 0;
     }
   }
 
   &-forgot {
+    font-family: Roboto;
+    margin: .3em 0;
     text-align: left;
+  }
+
+  @include small {
+    &-picture {
+      display: none;
+    }
+
+    &-inputs {
+      width: 100%;
+      text-align: center;
+
+      .button {
+        margin-left: 0;
+      }
+    }
   }
 }
