@@ -9,12 +9,12 @@
   transform: translateX(-50%) translateY(-50%);
   width: 700px;
   max-width: 95%;
-  margin: auto;
   height: 500px;
+  margin: auto;
   padding: 1em 2em;
   background: rgba($color: $light, $alpha: 0.8);
   color: $dark;
-  display: block;
+  text-align: right;
   color: $dark;
 
   &-bg {
@@ -26,21 +26,17 @@
     height: 100vh;
   }
 
-  &-picture, &-inputs {
+  &-inputs {
     display: inline-block;
     width: 50%;
-  }
-
-  &-picture {
-    text-align: center;
-    position: relative;
+    text-align: left;
     & > img {
-      top: 10px;
-      max-width: 100%;
+      max-width: 45%;
+      margin-left: 2.5%;
+      position: absolute;
+      left: 0;
     }
-  }
 
-  &-inputs {
     .button {
       margin: .5em 0;
       width: 150px;
@@ -72,17 +68,25 @@
   }
 
   @include small {
-    &-picture {
-      display: none;
-    }
-
+    height: auto;
     &-inputs {
       width: 100%;
       text-align: center;
+      padding-bottom: .7em;
+
+      & > img {
+        position: unset;
+        margin-top: .8em;
+      }
 
       .button {
         margin-left: 0;
+        margin: .6em 0;
       }
+    }
+
+    &-input-group:first-of-type {
+      margin-top: 0;
     }
   }
 }
