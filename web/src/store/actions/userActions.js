@@ -22,8 +22,8 @@ export const UPDATE_USER_FAILURE = 'UPDATE_USER_FAILURE';
 
 //LOGIN
 const loginLoading = () => ({ type: LOGIN_LOADING });
-const loginFailure = error => ({ type: LOGIN_SUCCESS, error });
-const loginSuccess = data => ({ type: LOGIN_FAILURE, data });
+const loginFailure = error => ({ type: LOGIN_FAILURE, error });
+const loginSuccess = data => ({ type: LOGIN_SUCCESS, data });
 export const logout = () => ({ type: LOGOUT });
 
 //CRUD
@@ -44,9 +44,8 @@ export const login = user => {
     dispatch(loginLoading());
     try {
       const response = await axios.post(endpoints.auth.login, user);
-      const userData = response.data;
-      dispatch(loginSuccess(userData));
-      //save token in localstorage
+      const userToken = response.data.token;
+      dispatch(loginSuccess(userToken));
     } catch (error) {
       console.log('ERROR', error);
       dispatch(loginFailure('common error'));

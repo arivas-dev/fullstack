@@ -1,7 +1,8 @@
 import { Provider } from 'react-redux';
-import store from 'store';
+import { store, persistor } from 'store';
+import { PersistGate } from 'redux-persist/integration/react'
 import { Spin } from 'antd';
-import { SystemRoutes } from 'components/SytemRoutes/SystemRoutes';
+import { SystemRoutes } from 'components/sytemRoutes/SystemRoutes';
 import { BrowserRouter as Router, Switch } from 'react-router-dom';
 import React, { Suspense } from 'react';
 import './App.css';
@@ -13,11 +14,13 @@ function App() {
   return (
     <Suspense fallback={<Loading />}>
       <Provider store={store}>
-        <Router>
-          <Switch>
-            <SystemRoutes />
-          </Switch>
-        </Router>
+        <PersistGate loading={<Loading />} persistor={persistor}>
+          <Router>
+            <Switch>
+              <SystemRoutes />
+            </Switch>
+          </Router>
+        </PersistGate>
       </Provider>
     </Suspense>
   );

@@ -1,9 +1,9 @@
 import { combineReducers } from 'redux';
 import { productReducer } from './productReducer';
-import { userReducer } from './userReducer'
+import { persistedUserReducer } from './userReducer'
 
 const rootReducer = combineReducers({
-    user: userReducer,
+    user: persistedUserReducer,
     product: productReducer,
 });
 

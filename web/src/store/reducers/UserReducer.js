@@ -14,7 +14,15 @@ import {
   UPDATE_USER_FAILURE,
 } from 'store/actions/userActions';
 import { initialUserState } from 'store/state/initialStates';
+import { persistReducer } from 'redux-persist';
 import { updateLoadable } from 'utils/loadable';
+import storage from 'redux-persist/lib/storage'
+
+const authPersistConfig = {
+  key: 'auth',
+  storage: storage,
+  whitelist: ['login'],
+}
 
 export const userReducer = (state = initialUserState(), action) => {
   switch (action.type) {
@@ -139,3 +147,5 @@ export const userReducer = (state = initialUserState(), action) => {
       return {...state};
   };
 };
+
+export const persistedUserReducer = persistReducer(authPersistConfig, userReducer);

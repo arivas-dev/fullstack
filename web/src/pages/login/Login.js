@@ -1,19 +1,30 @@
-import React, { useState } from 'react'
+import React, { useState, useRef } from 'react'
 import security from 'assets/img/login/security.svg'
-import { Link } from 'react-router-dom';
+import { Link, Redirect } from 'react-router-dom';
 import { login } from 'store/actions/userActions';
 import { useDispatch, useSelector } from 'react-redux';
 import './Login.scss';
 
-const Login = (props) => {
+const Login = () => {
+    const btnRef = useRef();
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('');
-    const { isLoading } = useSelector(s => s.user.login);
+    const { isLoading, data } = useSelector(s => s.user.login);
     const dispatch = useDispatch();
 
     const handleSubmit = () => {
         dispatch(login({ email, password }));
     };
+
+    const handleKey = evt => {
+        if (evt.keyCode === 13 && btnRef.current) {
+            btnRef.current.click();
+        }
+    }
+
+    if (data) {
+        return <Redirect to="/dashboard" />
+    }
 
     return (
         <>
@@ -40,10 +51,12 @@ const Login = (props) => {
                             placeholder="Input your password" 
                             value={password}
                             onChange={e => setPassword(e.target.value)}
+                            onKeyDown={handleKey}
                         />
                     </div>
                     <div className="login-buttons">
                         <button 
+                            ref={btnRef}
                             disabled={!(email && password) || isLoading} 
                             className={`button is-dark ${isLoading ? 'is-loading' : ''}`}
                             onClick={handleSubmit}
