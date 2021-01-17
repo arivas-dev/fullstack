@@ -17,7 +17,7 @@ class UserController extends Controller
         if (request('sort')) {
             $users = User::applySorts(request('sort'))->paginate();
         } else {
-            $users = Products::paginate();
+            $users = User::paginate();
         }
 
         return UserCollection::make(
