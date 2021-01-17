@@ -38,9 +38,18 @@
     }
 
     .button {
-      margin: .5em 0;
-      width: 150px;
+      margin: .5em;
+      flex: 1 1 0;
+      width: 45%;
     }
+  }
+
+  &-buttons {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
   }
 
   &-title {
@@ -81,7 +90,8 @@
 
       .button {
         margin-left: 0;
-        margin: .6em 0;
+        width: auto;
+        margin: .5em;
       }
     }
 

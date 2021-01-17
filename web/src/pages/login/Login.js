@@ -1,10 +1,19 @@
 import React, { useState } from 'react'
-import security from '../../assets/img/login/security.svg'
+import security from 'assets/img/login/security.svg'
+import { Link } from 'react-router-dom';
+import { login } from 'store/actions/userActions';
+import { useDispatch, useSelector } from 'react-redux';
 import './Login.scss';
 
 const Login = (props) => {
-    const [username, setUsername] = useState('')
+    const [email, setEmail] = useState('')
     const [password, setPassword] = useState('');
+    const { isLoading } = useSelector(s => s.user.login);
+    const dispatch = useDispatch();
+
+    const handleSubmit = () => {
+        dispatch(login({ email, password }));
+    };
 
     return (
         <>
@@ -14,13 +23,13 @@ const Login = (props) => {
                     <h2 className="login-title">LOGIN</h2>
                     <img src={security} alt="security" />
                     <div className="login-input-group">
-                        <label>Username:</label>
+                        <label>email:</label>
                         <input 
                             className="input" 
                             type="text" 
-                            placeholder="Input your username" 
-                            value={username}
-                            onChange={e => setUsername(e.target.value)} 
+                            placeholder="Input your email" 
+                            value={email}
+                            onChange={e => setEmail(e.target.value)} 
                         />
                     </div>
                     <div className="login-input-group">
@@ -33,7 +42,18 @@ const Login = (props) => {
                             onChange={e => setPassword(e.target.value)}
                         />
                     </div>
-                    <button disabled={!(username && password)} className="button is-dark">LOGIN</button>
+                    <div className="login-buttons">
+                        <button 
+                            disabled={!(email && password) || isLoading} 
+                            className={`button is-dark ${isLoading ? 'is-loading' : ''}`}
+                            onClick={handleSubmit}
+                        >
+                            LOGIN
+                        </button>
+                        <Link className="button is-info" to="/register">
+                            REGISTER
+                        </Link>
+                    </div>
                     <h4 className="login-forgot">Forgot password? Click <a href="!#">here</a></h4>
                 </div>
             </div>

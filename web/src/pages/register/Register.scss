@@ -1,0 +1,81 @@
+@import 'src/assets/scss/mixins';
+@import 'src/assets/scss/variables';
+
+.register {
+  position: fixed;
+  border-radius: 10px;
+  top: 50%;
+  left: 50%;
+  transform: translateX(-50%) translateY(-50%);
+  width: 700px;
+  max-width: 95%;
+  height: auto;
+  margin: auto;
+  padding: .5em 2em;
+  background: rgba($color: $light, $alpha: 0.8);
+  color: $dark;
+  text-align: center;
+  color: $dark;
+  
+  &-bg {
+    position: fixed;
+    background: $dark;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+  }
+
+  &-title {
+    font-family: Monserrat, sans-serif;
+    font-weight: bold;
+    margin-top: 1em;
+    font-size: 28px;
+    text-align: center;
+  }
+
+  &-picture {
+    max-width: 225px;
+    margin: .4em 0;
+  }
+
+  &-group {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    margin: .5em 0;
+
+    &-item {
+      text-align: left;
+      width: 45%;
+      margin: .2em 0;
+    }
+  }
+
+  &-buttons {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+
+    .button {
+      width: 140px;
+      margin: .5em;
+    }
+  }
+
+  @include small {
+    position: relative;
+    top: auto;
+    left: auto;
+    transform: none;
+    margin: 1em auto;
+    &-group {
+      &-item {
+        width: 100%;
+      }
+    }
+  }
+}

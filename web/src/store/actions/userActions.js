@@ -44,11 +44,11 @@ export const login = user => {
     dispatch(loginLoading());
     try {
       const response = await axios.post(endpoints.auth.login, user);
-      console.log('R', response);
       const userData = response.data;
       dispatch(loginSuccess(userData));
       //save token in localstorage
     } catch (error) {
+      console.log('ERROR', error);
       dispatch(loginFailure('common error'));
     }
   };
