@@ -42,17 +42,23 @@ class JwtAuthController extends Controller
         $validator = Validator::make($request->all(), [
             'name' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:users',
+            'telephone' => 'required|integer',
+            'username' => 'required|string|unique:users',
             'password' => 'required|string|min:6|confirmed',
+            'date_of_birth' => 'required|string',
         ]);
 
         if ($validator->fails()) {
-            return response()->json($validator->errors()->toJson(), 400);
+            return response()->json($validator->errors(), 400);
         }
 
         $user = User::create([
             'name' => $request->get('name'),
             'email' => $request->get('email'),
+            'telephone' => $request->get('telephone'),
+            'username' => $request->get('username'),
             'password' => Hash::make($request->get('password')),
+            'date_of_birth' => $request->get('date_of_birth'),
         ]);
 
         $token = JWTAuth::fromUser($user);
@@ -60,7 +66,8 @@ class JwtAuthController extends Controller
         return response()->json(compact('user', 'token'), 201);
     }
 
-    public function logout (Request $request) {
+    public function logout(Request $request)
+    {
         $token = $request->user()->token();
         $token->revoke();
         $response = ['message' => 'You have been successfully logged out!'];

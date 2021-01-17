@@ -18,6 +18,15 @@ class Products extends Model
      */
     protected $guarded = [];
 
+    protected $fillable = [
+        'id',
+        'SKU',
+        'name',
+        'quantity',
+        'price',
+        'description',
+    ];
+
     /**
      * The attributes that should be cast to native types.
      *
