@@ -1,16 +1,20 @@
-import React, { useState, useRef } from 'react'
+import { login } from 'store/actions/userActions';
+import { messages } from 'constants/messages';
 import security from 'assets/img/login/security.svg'
 import { Link, Redirect } from 'react-router-dom';
-import { login } from 'store/actions/userActions';
+import React, { useState, useRef } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
+import { useMessenger } from 'hooks/useMessenger';
 import './Login.scss';
 
 const Login = () => {
     const btnRef = useRef();
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('');
-    const { isLoading, data } = useSelector(s => s.user.login);
+    const loginNode = useSelector(s => s.user.login);
+    const { isLoading, data } = loginNode;
     const dispatch = useDispatch();
+    useMessenger(loginNode, messages.auth.login);
 
     const handleSubmit = () => {
         dispatch(login({ email, password }));

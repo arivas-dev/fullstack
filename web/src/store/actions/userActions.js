@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { endpoints } from 'constants/api';
+import { errorHandler } from 'utils/responses';
 
 //LOGIN
 export const LOGIN_LOADING = 'LOGIN_LOADING';
@@ -47,8 +48,8 @@ export const login = user => {
       const userToken = response.data.token;
       dispatch(loginSuccess(userToken));
     } catch (error) {
-      console.log('ERROR', error);
-      dispatch(loginFailure('common error'));
+      const errorText = errorHandler(error.response);
+      dispatch(loginFailure(errorText));
     }
   };
 }
@@ -62,7 +63,8 @@ export const retrieveUsers = ( skip, limit ) => {
       const list = response.data;
       dispatch(retrieveUsersSuccess(list));
     } catch (error) {
-      dispatch(retrieveUsersFailure('common error'));
+      const errorText = errorHandler(error.response);
+      dispatch(retrieveUsersFailure(errorText));
     }
   };
 };
@@ -75,7 +77,8 @@ export const registerUser = product => {
       const newUser = response.data;
       dispatch(registerUserSuccess(newUser));
     } catch (error) {
-      dispatch(registerUserFailure('common error'));
+      const errorText = errorHandler(error.response);
+      dispatch(registerUserFailure(errorText));
     }
   };
 };
@@ -88,7 +91,8 @@ export const updateUser = user => {
       const updatedUser = response.data;
       dispatch(updateUserSuccess(updatedUser));
     } catch (error) {
-      dispatch(updateUserFailure('common error'));
+      const errorText = errorHandler(error.response);
+      dispatch(updateUserFailure(errorText));
     }
   };
 };

@@ -1,0 +1,85 @@
+@import 'src/assets/scss/mixins';
+@import 'src/assets/scss/variables';
+
+.dashboard {
+  &-menu {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: $dark;
+    width: 100%;
+  }
+
+  &-title {
+    text-transform: uppercase;
+    margin-left: 10px;
+    color: $light;
+    font-family: Roboto, sans-serif;
+    letter-spacing: 1px;
+    font-weight: bold;
+    font-size: 16px;
+
+    &:hover {
+      cursor: pointer;
+      color: $terciary;
+    }
+  }
+
+  &-options {
+    flex: 1 1 auto;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    flex-wrap: wrap;
+    height: 60px;
+
+    & > li {
+      cursor: pointer;
+      width: 150px;
+      height: inherit;
+      color: $light;
+      font-size: 16px;
+      font-family: Roboto, serif;
+      
+      &, & > a {
+        display: inline-flex;
+        justify-content: center;
+        align-items: center;
+        flex-wrap: wrap;
+      }
+
+      & > a {
+        color: inherit;
+        width: 100%;
+        height: 100%;
+      }
+
+      &:hover {
+        transform: scale(1.03);
+        background: rgba($color: $secondary, $alpha: 0.6);
+      }
+    }
+  }
+
+  @include small {
+    &-menu {
+      flex-direction: column;
+      height: auto;
+    }
+
+    &-title {
+      margin: .5em 0;
+    }
+
+    &-options {
+      width: 100%;
+      flex-direction: column;
+      height: auto;
+      & > li {
+        padding: .5em 0;
+        width: 100%;
+        height: auto;
+      }
+    }
+  }
+}

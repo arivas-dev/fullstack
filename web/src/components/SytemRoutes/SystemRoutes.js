@@ -13,7 +13,7 @@ export const SystemRoutes = () => (
     <Route exact path="/" component={Login} />
     <Route exact path="/login" component={Login} />
     <Route exact path="/register" component={Register} />
-    <PrivateRoute exact path="/dashboard" component={Dashboard} />
+    <PrivateRoute path="/dashboard" component={Dashboard} />
     <Route path="*" component={NotFound} />
   </Switch>
 );

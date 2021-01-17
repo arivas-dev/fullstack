@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { endpoints } from 'constants/api';
+import { errorHandler } from 'utils/responses';
 
 export const RETRIEVE_PRODUCTS_LOADING = 'RETRIEVE_PRODUCTS_LOADING';
 export const RETRIEVE_PRODUCTS_SUCCESS = 'RETRIEVE_PRODUCTS_SUCCESS';
@@ -41,7 +42,8 @@ export const retrieveProducts = ( skip, limit ) => {
       const list = response.data;
       dispatch(retrieveProductsSuccess(list));
     } catch (error) {
-      dispatch(retrieveProductsFailure('common error'));
+      const errorText = errorHandler(error.response);
+      dispatch(retrieveProductsFailure(errorText));
     }
   };
 };
@@ -54,7 +56,8 @@ export const saveProduct = product => {
       const newProduct = response.data;
       dispatch(saveProductSuccess(newProduct));
     } catch (error) {
-      dispatch(saveProductFailure('common error'));
+      const errorText = errorHandler(error.response);
+      dispatch(saveProductFailure(errorText));
     }
   };
 };
@@ -67,7 +70,8 @@ export const updateProduct = product => {
       const updatedProduct = response.data;
       dispatch(updateProductSuccess(updatedProduct));
     } catch (error) {
-      dispatch(updateProductFailure('common error'));
+      const errorText = errorHandler(error.response);
+      dispatch(updateProductFailure(errorText));
     }
   };
 };
@@ -80,7 +84,8 @@ export const deleteProduct = product => {
       const removedProduct = response.data;
       dispatch(deleteProductSuccess(removedProduct));
     } catch (error) {
-      dispatch(deleteProductFailure('common error'));
+      const errorText = errorHandler(error.response);
+      dispatch(deleteProductFailure(errorText));
     }
   };
 };

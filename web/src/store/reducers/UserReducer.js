@@ -58,6 +58,7 @@ export const userReducer = (state = initialUserState(), action) => {
         ...state,
         login: {
           ...updateLoadable(state.login, false, undefined),
+          firstFetch: true,
           data: undefined,
         }
       }
