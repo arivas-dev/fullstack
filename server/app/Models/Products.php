@@ -23,6 +23,7 @@ class Products extends Model
         'quantity',
         'price',
         'description',
+        'image',
     ];
 
     /**

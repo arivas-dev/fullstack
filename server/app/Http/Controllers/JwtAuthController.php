@@ -24,7 +24,7 @@ class JwtAuthController extends Controller
         ]);
 
         if ($validator->fails()) {
-            return response()->json($validator->errors()->toJson(), 403);
+            return response()->json($validator->errors(), 403);
         }
 
         try {
