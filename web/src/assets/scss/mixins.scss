@@ -1,5 +1,15 @@
 @import './variables.scss';
 
+@font-face {
+  src: url('../fonts/Montserrat.ttf');
+  font-family: Monserrat;
+}
+
+@font-face {
+  src: url('../fonts/Roboto.ttf');
+  font-family: Roboto;
+}
+
 @mixin small {
   @media (max-width: $small) {
     @content;

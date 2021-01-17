@@ -7,14 +7,14 @@
   top: 50%;
   left: 50%;
   transform: translateX(-50%) translateY(-50%);
-  width: 625px;
+  width: 700px;
   max-width: 95%;
   height: 500px;
+  margin: auto;
   padding: 1em 2em;
   background: rgba($color: $light, $alpha: 0.8);
   color: $dark;
-  display: table;
-  table-layout: fixed;
+  text-align: right;
   color: $dark;
 
   &-bg {
@@ -26,28 +26,28 @@
     height: 100vh;
   }
 
-  &-picture, &-inputs {
-    display: table-cell;
-    vertical-align: top;
+  &-inputs {
+    display: inline-block;
     width: 50%;
-  }
-
-  &-picture {
-    text-align: center;
+    text-align: left;
     & > img {
-      margin-top: 5em;
-      max-width: 70%;
+      max-width: 45%;
+      margin-left: 2.5%;
+      position: absolute;
+      left: 0;
+    }
+
+    .button {
+      margin: .5em 0;
+      width: 150px;
     }
   }
 
-  &-inputs {
-    text-align: center;
-  }
-
   &-title {
+    font-family: Monserrat, sans-serif;
     font-weight: bold;
     margin-top: 1em;
-    font-size: 26px;
+    font-size: 28px;
     text-align: center;
   }
 
@@ -55,12 +55,38 @@
     margin: .7em 0;
     text-align: left;
     & > label {
+      font-family: Roboto;
       display: inline-block;
       margin: .4em 0;
     }
   }
 
   &-forgot {
+    font-family: Roboto;
+    margin: .3em 0;
     text-align: left;
+  }
+
+  @include small {
+    height: auto;
+    &-inputs {
+      width: 100%;
+      text-align: center;
+      padding-bottom: .7em;
+
+      & > img {
+        position: unset;
+        margin-top: .8em;
+      }
+
+      .button {
+        margin-left: 0;
+        margin: .6em 0;
+      }
+    }
+
+    &-input-group:first-of-type {
+      margin-top: 0;
+    }
   }
 }
