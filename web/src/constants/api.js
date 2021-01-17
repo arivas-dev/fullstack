@@ -1,17 +1,19 @@
-const endPoints = {
-  login: {
-    login: 'http://127.0.0.1:8000/api/v1/login',
-    logout: 'http://127.0.0.1:8000/api/v1/logout',
+
+const baseUrl = 'https://warm-escarpment-23462.herokuapp.com/api/v1';
+export const endpoints = {
+  auth: {
+    login: `${baseUrl}/login`,
+    logout: `${baseUrl}/logout`,
+    register: `${baseUrl}/register`
   },
   products: {
-    retrieve: 'http://127.0.0.1:8000/api/v1/products',
-    save: 'http://127.0.0.1:8000/api/v1/products',
-    update: (productId) => `http://127.0.0.1:8000/api/v1/products/${productId}`,
-    delete: (productId) => `http://127.0.0.1:8000/api/v1/products/${productId}`,
+    retrieve: `${baseUrl}/products`,
+    save: `${baseUrl}/products`,
+    update: (productId) => `${baseUrl}/products/${productId}`,
+    delete: (productId) => `${baseUrl}/products/${productId}`,
   },
   users: {
-    retrieve: 'http://127.0.0.1:8000/api/v1/users',
-    save: 'http://127.0.0.1:8000/api/v1/users',
-    update: (userId) => `http://127.0.0.1:8000/api/v1/users/${userId}`,
+    retrieve: `${baseUrl}/user`,
+    update: (userId) => `${baseUrl}/${userId}`,
   }
 };

@@ -1,29 +1,24 @@
 import axios from 'axios';
-import endpoints from 'constants/api';
-import messages from 'constants/messages';
+import { endpoints } from 'constants/api';
 
 //LOGIN
-const LOGIN_LOADING = 'LOGIN_LOADING';
-const LOGIN_SUCCESS = 'LOGIN_SUCCESS';
-const LOGIN_FAILURE = 'LOGIN_FAILURE';
-const LOGOUT = 'LOGOUT';
+export const LOGIN_LOADING = 'LOGIN_LOADING';
+export const LOGIN_SUCCESS = 'LOGIN_SUCCESS';
+export const LOGIN_FAILURE = 'LOGIN_FAILURE';
+export const LOGOUT = 'LOGOUT';
 
 //CRUD
-const RETRIEVE_USERS_LOADING = 'RETRIEVE_USERS_LOADING';
-const RETRIEVE_USERS_SUCCESS = 'RETRIEVE_USERS_SUCCESS';
-const RETRIEVE_USERS_FAILURE = 'RETRIEVE_USERS_FAILURE';
+export const RETRIEVE_USERS_LOADING = 'RETRIEVE_USERS_LOADING';
+export const RETRIEVE_USERS_SUCCESS = 'RETRIEVE_USERS_SUCCESS';
+export const RETRIEVE_USERS_FAILURE = 'RETRIEVE_USERS_FAILURE';
 
-const SAVE_USER_LOADING = 'SAVE_USER_LOADING';
-const SAVE_USER_SUCCESS = 'SAVE_USER_SUCCESS';
-const SAVE_USER_FAILURE = 'SAVE_USER_FAILURE';
+export const REGISTER_USER_LOADING = 'REGISTER_USER_LOADING';
+export const REGISTER_USER_SUCCESS = 'REGISTER_USER_SUCCESS';
+export const REGISTER_USER_FAILURE = 'REGISTER_USER_FAILURE';
 
-const UPDATE_USER_LOADING = 'UPDATE_USER_LOADING';
-const UPDATE_USER_SUCCESS = 'UPDATE_USER_SUCCESS';
-const UPDATE_USER_FAILURE = 'UPDATE_USER_FAILURE';
-
-const DELETE_USER_LOADING = 'DELETE_USER_LOADING';
-const DELETE_USER_SUCCESS = 'DELETE_USER_SUCCESS';
-const DELETE_USER_FAILURE = 'DELETE_USER_FAILURE';
+export const UPDATE_USER_LOADING = 'UPDATE_USER_LOADING';
+export const UPDATE_USER_SUCCESS = 'UPDATE_USER_SUCCESS';
+export const UPDATE_USER_FAILURE = 'UPDATE_USER_FAILURE';
 
 //LOGIN
 const loginLoading = () => ({ type: LOGIN_LOADING });
@@ -36,23 +31,20 @@ const retrieveUsersLoading = () => ({ type: RETRIEVE_USERS_LOADING });
 const retrieveUsersSuccess = userPage => ({ type: RETRIEVE_USERS_SUCCESS, data: userPage });
 const retrieveUsersFailure = error => ({ type: RETRIEVE_USERS_FAILURE, error });
 
-const saveUserLoading = () => ({ type: SAVE_USER_LOADING });
-const saveUserSuccess = user => ({ type: SAVE_USER_SUCCESS, data: user });
-const saveUserFailure = error => ({ type: SAVE_USER_FAILURE, error });
+const registerUserLoading = () => ({ type: REGISTER_USER_LOADING });
+const registerUserSuccess = user => ({ type: REGISTER_USER_SUCCESS, data: user });
+const registerUserFailure = error => ({ type: REGISTER_USER_FAILURE, error });
 
 const updateUserLoading = () => ({ type: UPDATE_USER_LOADING });
 const updateUserSuccess = user => ({ type: UPDATE_USER_SUCCESS, data: user });
 const updateUserFailure = error => ({ type: UPDATE_USER_FAILURE, error });
 
-const deleteUserLoading = () => ({ type: DELETE_USER_LOADING });
-const deleteUserSuccess = user => ({ type: DELETE_USER_SUCCESS, data: user });
-const deleteUserFailure = error => ({ type: DELETE_USER_FAILURE, error });
-
 export const login = user => {
   return async dispatch => {
     dispatch(loginLoading());
     try {
-      const response = await axios.post(endpoints.login, user);
+      const response = await axios.post(endpoints.auth.login, user);
+      console.log('R', response);
       const userData = response.data;
       dispatch(loginSuccess(userData));
       //save token in localstorage
@@ -76,15 +68,15 @@ export const retrieveUsers = ( skip, limit ) => {
   };
 };
 
-export const saveUser = product => {
+export const registerUser = product => {
   return async dispatch => {
     try {
-      dispatch(saveUserLoading());
+      dispatch(registerUserLoading());
       const response = await axios.post(endpoints.products.save, product);
       const newUser = response.data;
-      dispatch(saveUserSuccess(newUser));
+      dispatch(registerUserSuccess(newUser));
     } catch (error) {
-      dispatch(saveUserFailure('common error'));
+      dispatch(registerUserFailure('common error'));
     }
   };
 };
@@ -101,18 +93,3 @@ export const updateUser = user => {
     }
   };
 };
-
-export const deleteUser = user => {
-  return async dispatch => {
-    try {
-      dispatch(deleteUserLoading());
-      const response = await axios.get(endpoints.products.delete(user.id), user);
-      const removedUser = response.data;
-      dispatch(deleteUserSuccess(removedUser));
-    } catch (error) {
-      dispatch(deleteUserFailure('common error'));
-    }
-  };
-};
-
-
