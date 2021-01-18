@@ -1,11 +1,15 @@
-import { Table } from 'antd';
+import { Table, Pagination } from 'antd';
 import { retrieveUsers } from 'store/actions/userActions';
+import { UserModal } from 'components/userModal/UserModal';
 import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import './Users.scss';
 
 export const Users = () => {
-  const [selectedUser, setSelectedUser] = useState(null);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [selectedUser, setSelectedUser] = useState({});
+  const [modalOpen, setModalOpen] = useState(false);
+  const [modalAction, setModalAction] = useState('New');
   const usersNode = useSelector(s => s.user.users);
   const { isLoading, data, firstFetch } = usersNode;
   const dispatch = useDispatch();
@@ -20,8 +24,8 @@ export const Users = () => {
             <input 
               type="radio" 
               name="user" 
-              checked={record.id === selectedUser} 
-              onChange={(e) => setSelectedUser(record.id)}
+              checked={record.id === selectedUser.id} 
+              onChange={(e) => setSelectedUser(record)}
             />
           </label>
         </div>
@@ -64,16 +68,46 @@ export const Users = () => {
 
   useEffect(() => {
     if (firstFetch && !isLoading) {
-      dispatch(retrieveUsers(0, 10));
+      dispatch(retrieveUsers(currentPage));
     }
-  }, [firstFetch, isLoading, dispatch]);
+  }, [firstFetch, isLoading, dispatch, currentPage]);
 
+  const handleNew = () => {
+    setModalAction('New');
+    setModalOpen(true);
+  }
+
+  const handleUpdate = () => {
+    setModalAction('Update');
+    setModalOpen(true);
+  }
+
+  const handlePagination = page => {
+    if (page !== currentPage) {
+      setCurrentPage(page);
+      dispatch(retrieveUsers(page));
+    }
+  }
+
+  const total = data.meta.per_page * data.meta.total;
+  const perPage = data.meta.per_page || 15;
 
   return (
     <div className="users">
       <div className="users-actions">
-        <button className="button is-dark">New user</button>
-        <button disabled={!selectedUser} className="button is-info">Update user</button>
+        <button 
+          onClick={handleNew} 
+          className="button is-dark"
+        >
+          New user
+        </button>
+        <button 
+          onClick={handleUpdate}
+          disabled={!selectedUser.id} 
+          className="button is-info"
+        >
+          Update user
+        </button>
       </div>
       <div className="users-data">
         <Table 
@@ -83,7 +117,22 @@ export const Users = () => {
           pagination={false}
           scroll={{ x: 1200 }}
         />
+        <div className="users-pagination">
+          <Pagination 
+            disabled={isLoading}
+            total={total} 
+            defaultCurrent={1} 
+            pageSize={perPage} 
+            onChange={page => handlePagination(page)}
+          />
+        </div>
       </div>
+      <UserModal 
+        action={modalAction} 
+        setVisible={setModalOpen} 
+        visible={modalOpen}
+        user={selectedUser}
+      />
     </div>
   );
 };

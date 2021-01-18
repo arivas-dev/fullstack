@@ -19,6 +19,12 @@
     margin: 1em 0;
   }
 
+  &-pagination {
+    width: 100%;
+    text-align: center;
+    margin: 2em 0;
+  }
+
   @include small {
     &-actions {
       text-align: center;

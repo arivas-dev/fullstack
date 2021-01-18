@@ -1,0 +1,22 @@
+.user-modal {
+  max-width: 95%;
+  margin: .5em auto;
+
+  &-item {
+    width: 100%;
+    margin: .4em auto;
+  }
+
+  &-submit {
+    width: 100%;
+    margin-bottom: 1em;
+    margin-top: 2em;
+    display: inline-flex;
+    justify-content: center;
+    
+    .button {
+      width: 125px;
+      margin: 0 .5em;
+    }
+  }
+}

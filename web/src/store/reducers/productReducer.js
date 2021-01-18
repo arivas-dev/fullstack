@@ -12,7 +12,7 @@ import {
   DELETE_PRODUCT_SUCCESS,
   DELETE_PRODUCT_FAILURE,
 } from 'store/actions/productActions';
-import { initialProductState } from 'store/state/initialStates';
+import { initialProductState, defaultLoadableData } from 'store/state/initialStates';
 import { updateLoadable } from 'utils/loadable';
 
 export const productReducer = (state = initialProductState(), action) => {
@@ -22,7 +22,7 @@ export const productReducer = (state = initialProductState(), action) => {
         ...state,
         products: {
           ...updateLoadable(state.products, true, undefined),
-          data: [],
+          data: defaultLoadableData(),
         }
       }
     
@@ -40,7 +40,7 @@ export const productReducer = (state = initialProductState(), action) => {
         ...state,
         products: {
           ...updateLoadable(state.products, false, action.error),
-          data: [],
+          data: defaultLoadableData(),
         }
       }
     

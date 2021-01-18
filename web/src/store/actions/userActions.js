@@ -55,12 +55,12 @@ export const login = user => {
 }
 
 //CRUD
-export const retrieveUsers = ( skip, limit ) => {
+export const retrieveUsers = page => {
   return async dispatch => {
     try {
       dispatch(retrieveUsersLoading());
-      const response = await axios.get(endpoints.users.retrieve, { skip, limit });
-      const { data: { data: list = [] }, meta } = response;
+      const response = await axios.get(endpoints.users.retrieve, { params: { page } });
+      const { data: { data: list = [], meta } } = response;
       const usersList = list.map(user => ({...user.attributes, id: user.id }));
       dispatch(retrieveUsersSuccess({
         list: usersList,

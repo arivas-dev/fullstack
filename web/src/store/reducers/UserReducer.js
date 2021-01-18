@@ -14,7 +14,7 @@ import {
   UPDATE_USER_SUCCESS,
   UPDATE_USER_FAILURE,
 } from 'store/actions/userActions';
-import { initialUserState } from 'store/state/initialStates';
+import { initialUserState, defaultLoadableData } from 'store/state/initialStates';
 import { persistReducer } from 'redux-persist';
 import { updateLoadable } from 'utils/loadable';
 import storage from 'redux-persist/lib/storage'
@@ -72,7 +72,7 @@ export const userReducer = (state = initialUserState(), action) => {
         ...state,
         users: {
           ...updateLoadable(state.users, true, undefined),
-          data: [],
+          data: defaultLoadableData(),
         }
       }
     
@@ -90,7 +90,7 @@ export const userReducer = (state = initialUserState(), action) => {
         ...state,
         users: {
           ...updateLoadable(state.users, false, action.error),
-          data: [],
+          data: defaultLoadableData(),
         }
       }
 

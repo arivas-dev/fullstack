@@ -1,14 +1,16 @@
 import { initLoadable } from 'utils/loadable';
 
+export const defaultLoadableData = () => ({ list: [], meta: { per_page: 0, total: 0 } });
+
 export const initialUserState = () => ({
   login: initLoadable(undefined),
-  users: initLoadable({ list: [], meta: { from: 0, to: 0, total: 0 } }),
+  users: initLoadable(defaultLoadableData()),
   update: initLoadable(undefined),
   register: initLoadable(undefined),
 });
 
 export const initialProductState = () => ({
-  products: initLoadable({ list: [], meta: { from: 0, to: 0, total: 0 } }),
+  products: initLoadable(defaultLoadableData()),
   save: initLoadable(undefined),
   update: initLoadable(undefined),
   delete: initLoadable(undefined),
