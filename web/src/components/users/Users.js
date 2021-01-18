@@ -1,18 +1,29 @@
 import { Table, Pagination } from 'antd';
-import { retrieveUsers } from 'store/actions/userActions';
+import { retrieveUsers, registerUser, updateUser } from 'store/actions/userActions';
 import { UserModal } from 'components/userModal/UserModal';
 import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
+import { useMessenger } from 'hooks/useMessenger';
+import { messages } from 'constants/messages';
 import './Users.scss';
 
 export const Users = () => {
+  //Local state
   const [currentPage, setCurrentPage] = useState(1);
   const [selectedUser, setSelectedUser] = useState({});
   const [modalOpen, setModalOpen] = useState(false);
   const [modalAction, setModalAction] = useState('New');
-  const usersNode = useSelector(s => s.user.users);
-  const { isLoading, data, firstFetch } = usersNode;
+
+  //Redux
   const dispatch = useDispatch();
+  const usersNode = useSelector(s => s.user.users);
+  const registerNode = useSelector(s => s.user.register);
+  const updateNode = useSelector(s => s.user.update);
+  const { isLoading, data, firstFetch } = usersNode;
+
+  //Messages
+  useMessenger(registerNode, messages.users.created);
+  useMessenger(updateNode, messages.users.updated);
 
   const columns = [
     {
@@ -89,8 +100,16 @@ export const Users = () => {
     }
   }
 
-  const { per_page: perPage = 15, total: pageTotal = 1 } = data.meta || { }
-  const total = perPage * pageTotal;
+  const onSave = user => {
+    dispatch(registerUser(user, currentPage));
+  }
+
+  const onUpdate = user => {
+    dispatch(updateUser(user, currentPage));
+  }
+
+  console.log(data);
+  const { per_page: perPage = 15, total } = data.meta || { }
 
   return (
     <div className="users">
@@ -131,7 +150,9 @@ export const Users = () => {
         action={modalAction} 
         setVisible={setModalOpen} 
         visible={modalOpen}
-        user={selectedUser}
+        loading={registerNode.isLoading || updateNode.isLoading}
+        onSave={onSave}
+        onUpdate={onUpdate}
       />
     </div>
   );

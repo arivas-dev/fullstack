@@ -73,13 +73,15 @@ export const retrieveUsers = page => {
   };
 };
 
-export const registerUser = product => {
+export const registerUser = (user, refreshPage) => {
   return async dispatch => {
     try {
       dispatch(registerUserLoading());
-      const response = await axios.post(endpoints.products.save, product);
-      const newUser = response.data;
+      const response = await axios.post(endpoints.auth.register, user);
+      console.log(response);
+      const newUser = response.data.user;
       dispatch(registerUserSuccess(newUser));
+      await dispatch(retrieveUsers(refreshPage));
     } catch (error) {
       const errorText = errorHandler(error.response);
       dispatch(registerUserFailure(errorText));

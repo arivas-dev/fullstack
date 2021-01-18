@@ -9,4 +9,8 @@ export const messages = {
     "login": "Login successfully",
     "logout": 'Logout succesfully',
   },
+  "users": {
+    "created": "User created successfully",
+    "updated": "User updated successfully",
+  }
 };

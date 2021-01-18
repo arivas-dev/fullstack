@@ -1,9 +1,8 @@
-import { getDateFormat } from 'utils/data';
-import { Modal, Col, Row } from 'antd';
+import { Modal, message, Col, Row } from 'antd';
 import React, { useState } from 'react';
 import './UserModal.scss';
 
-export const UserModal = ({ action, visible, setVisible, user }) => {
+export const UserModal = ({ action, visible, setVisible, onSave, onUpdate, loading }) => {
   const [fields, setFields] = useState({});
 
   const handleChange = evt => {
@@ -13,6 +12,16 @@ export const UserModal = ({ action, visible, setVisible, user }) => {
 
   const handleSubmit = evt => {
     evt.preventDefault();
+    if (action === 'New') {
+      if (fields.password !== fields.password_confirmation) {
+        return message.error('Password must be the same');
+      }
+      onSave(fields);
+    } else {
+
+    }
+    setFields({});
+    setVisible(false);
   };
 
   return (
@@ -38,7 +47,6 @@ export const UserModal = ({ action, visible, setVisible, user }) => {
               onChange={handleChange}
               name="date_of_birth"
               value={fields.date_of_birth}
-              defaultValue={getDateFormat(user.date_of_birth)}
             />
           </Col>
         </Row>
@@ -55,7 +63,6 @@ export const UserModal = ({ action, visible, setVisible, user }) => {
               maxLength="30"
               name="name"
               value={fields.name}
-              defaultValue={user.name}
             />
           </Col>
           <Col sm={24} lg={{ span: 11, offset: 1 }} className="user-modal-item">
@@ -71,7 +78,6 @@ export const UserModal = ({ action, visible, setVisible, user }) => {
               minLength="8"
               name="telephone"
               value={fields.telephone}
-              defaultValue={user.telephone}
             />
           </Col>
         </Row>
@@ -88,7 +94,6 @@ export const UserModal = ({ action, visible, setVisible, user }) => {
               maxLength="10"
               name="username"
               value={fields.username}
-              defaultValue={user.username}
             />
           </Col>
           <Col sm={24} lg={{ span: 11, offset: 1 }} className="user-modal-item">
@@ -101,7 +106,6 @@ export const UserModal = ({ action, visible, setVisible, user }) => {
               onChange={handleChange}
               name="email"
               value={fields.email}
-              defaultValue={user.email}
             />
           </Col>
         </Row>
@@ -131,8 +135,8 @@ export const UserModal = ({ action, visible, setVisible, user }) => {
                   placeholder="Confirm your password" 
                   onChange={handleChange}
                   maxLength="10"
-                  name="confirm_password"
-                  value={fields.confirm_password}
+                  name="password_confirmation"
+                  value={fields.password_confirmation}
                 />
               </Col>
             </Row>
@@ -141,7 +145,7 @@ export const UserModal = ({ action, visible, setVisible, user }) => {
 
         <div className="user-modal-submit">
             <input className="button is-dark" type="reset" value="Clean" />
-            <input className="button is-dark" type="submit" value="Save" />
+            <input className={`button is-dark ${loading ? 'is-loading' : ''}`} type="submit" value="Save" />
         </div>
       </form>
     </Modal>
