@@ -102,12 +102,15 @@ export const Users = () => {
     }
   }
 
-  const onSave = user => {
-    dispatch(registerUser(user, currentPage));
+  const onSave = async(user) => {
+    await dispatch(registerUser(user, currentPage));
+    setModalOpen(false);
   }
 
-  const onUpdate = user => {
-    dispatch(updateUser({ ...user, id: selectedUser.id }));
+  const onUpdate = async(user) => {
+    await dispatch(updateUser({ ...user, id: selectedUser.id }));
+    setSelectedUser({});
+    setModalOpen(false);
   }
 
   const { per_page: perPage = 15, total } = data.meta || { }
@@ -155,6 +158,7 @@ export const Users = () => {
         loading={registerNode.isLoading || updateNode.isLoading}
         onSave={onSave}
         onUpdate={onUpdate}
+        user={selectedUser}
       />
     </div>
   );
