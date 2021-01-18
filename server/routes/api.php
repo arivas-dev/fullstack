@@ -19,6 +19,7 @@ use Illuminate\Support\Facades\Route;
 //     return $request->user();
 // });
 
+Route::get('demo','ProductController@index')->name('api.v1.products.index');
 
 //PRODUCTS ROUTE
 Route::group(['middleware' => ['jwt.verify']], function() {

@@ -15,6 +15,7 @@ export const Products = () => {
     const [modalOpen, setModalOpen] = useState(false);
     const [modalAction, setModalAction] = useState('New');
     const productsNode = useSelector(s => s.product.products);
+    const [selectedProduct,setSelectProduct] = useState({})
     const { isLoading, data, firstFetch } = productsNode;
     const dispatch = useDispatch();
 
@@ -30,7 +31,7 @@ export const Products = () => {
                             type="radio"
                             name="user"
                             checked={record.id === selected.id}
-                            onChange={(e) => setSelected(record)}
+                            onChange={(e) => { setSelected(record);setSelectProduct(record) }}
                         />
                     </label>
                 </div>
@@ -139,6 +140,7 @@ export const Products = () => {
                 visible={modalOpen}
                 user={selected}
                 onSave={onSave}
+                selectedProduct={selectedProduct}
             />
         </div>
     );

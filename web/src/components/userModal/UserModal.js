@@ -1,13 +1,52 @@
+import { getDateFormat } from 'utils/data';
 import { Modal, message, Col, Row } from 'antd';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './UserModal.scss';
 
-export const UserModal = ({ action, visible, setVisible, onSave, onUpdate, loading }) => {
-  const [fields, setFields] = useState({});
+const userFields = (adding = false) => ({
+  date_of_birth: '',
+  name: '',
+  telephone: '',
+  username: '',
+  email: '',
+  ...adding && {password: '',  password_confirmation: ''},
+});
+
+export const UserModal = ({ action, visible, setVisible, onSave, onUpdate, loading, user }) => {
+  const [fields, setFields] = useState(userFields(action === 'New'));
+  const [userId, setUserId] = useState(0);
+
+  useEffect(() => {
+    if (
+      action !== 'New' &&
+      user.email !== fields.email &&
+      user.id !== userId
+    ) {
+      setUserId(user.id);
+      const { date_of_birth, name, telephone, username, email } = user;
+      setFields({
+        ...fields,
+        date_of_birth: getDateFormat(date_of_birth),
+        email,
+        name,
+        telephone,
+        username
+      });
+    }
+  }, [user, fields, action, userId]);
+
+  useEffect(() => {
+    if (visible && action === 'New') {
+      setFields(userFields(true));
+    }
+  }, [visible, action]);
 
   const handleChange = evt => {
     const { name, value } = evt.target;
-    setFields({...fields, [name]: value});
+    setFields((prevValue) => ({
+      ...prevValue, 
+      [name]: value,
+    }));
   };
 
   const handleSubmit = async (evt) => {
@@ -16,12 +55,10 @@ export const UserModal = ({ action, visible, setVisible, onSave, onUpdate, loadi
       if (fields.password !== fields.password_confirmation) {
         return message.error('Password must be the same');
       }
-      await onSave(fields);
+      onSave(fields);
     } else {
-      await onUpdate(fields);
+      onUpdate(fields);
     }
-    setFields({});
-    setVisible(false);
   };
 
   return (

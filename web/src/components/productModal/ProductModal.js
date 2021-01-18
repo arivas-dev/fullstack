@@ -3,8 +3,8 @@ import { Modal, Col, Row } from 'antd';
 import React, { useState } from 'react';
 // import './UserModal.scss';
 
-export const ProductModal = ({ action, visible, setVisible, product,onSave }) => {
-  const [fields, setFields] = useState({});
+export const ProductModal = ({ action, visible, setVisible, product,onSave,selectedProduct }) => {
+  const [fields, setFields] = useState({...selectedProduct});
 
   const handleChange = evt => {
     const { name, value } = evt.target;
@@ -44,7 +44,7 @@ export const ProductModal = ({ action, visible, setVisible, product,onSave }) =>
               placeholder="Input SKU" 
               onChange={handleChange}
               name="SKU"
-              value={fields.sku}
+              value={fields.SKU}
             />
           </Col>
           <Col sm={24} lg={{ span: 11, offset: 1 }} className="user-modal-item">
