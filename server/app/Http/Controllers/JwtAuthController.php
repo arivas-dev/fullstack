@@ -17,7 +17,7 @@ class JwtAuthController extends Controller
     public function login(Request $request)
     {
         $credentials = $request->only('email', 'password');
-        $myTTL = 5; //minutes
+        $myTTL = 60; //minutes
 
         JWTAuth::factory()->setTTL($myTTL);
 

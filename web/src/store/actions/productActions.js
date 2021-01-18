@@ -39,8 +39,12 @@ export const retrieveProducts = ( skip, limit ) => {
     try {
       dispatch(retrieveProductsLoading());
       const response = await axios.get(endpoints.products.retrieve, { skip, limit });
-      const list = response.data;
-      dispatch(retrieveProductsSuccess(list));
+      const { data: { data: list = [], meta } } = response;
+      const productList = list.map(product => ({...product.attributes, id: product.id }));
+      dispatch(retrieveProductsSuccess({
+        list: productList,
+        meta,
+      }));
     } catch (error) {
       const errorText = errorHandler(error.response);
       dispatch(retrieveProductsFailure(errorText));
@@ -48,13 +52,14 @@ export const retrieveProducts = ( skip, limit ) => {
   };
 };
 
-export const saveProduct = product => {
+export const saveProduct = (product,refreshPage) => {
   return async dispatch => {
     try {
       dispatch(saveProductLoading());
       const response = await axios.post(endpoints.products.save, product);
       const newProduct = response.data;
       dispatch(saveProductSuccess(newProduct));
+      await dispatch(retrieveProducts(refreshPage));
     } catch (error) {
       const errorText = errorHandler(error.response);
       dispatch(saveProductFailure(errorText));

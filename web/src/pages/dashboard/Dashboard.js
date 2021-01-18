@@ -5,6 +5,7 @@ import React from 'react';
 import WelcomeImg from 'assets/img/welcome.svg';
 import { useDispatch } from 'react-redux';
 import { Users } from 'components/users/Users';
+import { Products } from 'components/products/Products';
 import { Link, Switch, Route, useRouteMatch } from 'react-router-dom';
 import './Dashboard.scss';
 
@@ -44,7 +45,7 @@ const Dashboard = () => {
         <Switch>
             <Route exact path={path} component={Welcome} />
             <Route exact path={`${path}/users`} component={Users} />
-            <Route exact path={`${path}/products`} component={() => <h2>Welcome to the products</h2>} />
+            <Route exact path={`${path}/products`} component={Products} />
         </Switch>
       </div>
     </div>

@@ -38,7 +38,7 @@ class ProductController extends Controller
             'quantity' => 'required|string',
             'price' => 'required|string',
             'description' => 'required|string',
-            'image' => 'required|string',
+            // 'image' => 'string',
         ]);
 
         if ($validator->fails()) {
@@ -51,7 +51,7 @@ class ProductController extends Controller
             'quantity' => $request->get('quantity'),
             'price' => $request->get('price'),
             'description' => $request->get('description'),
-            'image' => $request->get('image')
+            // 'image' => $request->get('image')
         ]);
 
         return response()->json([
@@ -68,7 +68,7 @@ class ProductController extends Controller
                 'quantity' => 'required|string',
                 'price' => 'required|string',
                 'description' => 'required|string',
-                'image' => 'required|string',
+                // 'image' => 'string',
             ]);
 
             if ($validator->fails()) {

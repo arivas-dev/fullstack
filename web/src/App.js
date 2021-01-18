@@ -2,7 +2,7 @@ import { Provider } from 'react-redux';
 import { store, persistor } from 'store';
 import { PersistGate } from 'redux-persist/integration/react'
 import { Spin } from 'antd';
-import { SystemRoutes } from 'components/sytemRoutes/SystemRoutes';
+import { SystemRoutes } from 'components/SytemRoutes/SystemRoutes';
 import { BrowserRouter as Router, Switch } from 'react-router-dom';
 import React, { Suspense } from 'react';
 import 'utils/axios';
