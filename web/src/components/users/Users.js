@@ -29,6 +29,8 @@ export const Users = () => {
     {
       title: ' ',
       align: 'center',
+      dataIndex: 'id',
+      key: 'id',
       render: (text, record) => (
         <div className="control">
           <label class="radio">
@@ -105,10 +107,9 @@ export const Users = () => {
   }
 
   const onUpdate = user => {
-    dispatch(updateUser(user, currentPage));
+    dispatch(updateUser({ ...user, id: selectedUser.id }));
   }
 
-  console.log(data);
   const { per_page: perPage = 15, total } = data.meta || { }
 
   return (
@@ -134,6 +135,7 @@ export const Users = () => {
           dataSource={data.list} 
           columns={columns} 
           pagination={false}
+          rowKey="id" 
           scroll={{ x: 1200 }}
         />
         <div className="users-pagination">

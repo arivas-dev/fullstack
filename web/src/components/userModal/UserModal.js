@@ -10,15 +10,15 @@ export const UserModal = ({ action, visible, setVisible, onSave, onUpdate, loadi
     setFields({...fields, [name]: value});
   };
 
-  const handleSubmit = evt => {
+  const handleSubmit = async (evt) => {
     evt.preventDefault();
     if (action === 'New') {
       if (fields.password !== fields.password_confirmation) {
         return message.error('Password must be the same');
       }
-      onSave(fields);
+      await onSave(fields);
     } else {
-
+      await onUpdate(fields);
     }
     setFields({});
     setVisible(false);

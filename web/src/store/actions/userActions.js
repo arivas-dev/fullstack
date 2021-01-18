@@ -92,10 +92,10 @@ export const registerUser = (user, refreshPage) => {
 export const updateUser = user => {
   return async dispatch => {
     try {
+      
       dispatch(updateUserLoading());
-      const response = await axios.get(endpoints.products.update(user.id), user);
-      const updatedUser = response.data;
-      dispatch(updateUserSuccess(updatedUser));
+      await axios.patch(endpoints.users.update(user.id), user);
+      dispatch(updateUserSuccess(user));
     } catch (error) {
       const errorText = errorHandler(error.response);
       dispatch(updateUserFailure(errorText));
