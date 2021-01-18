@@ -1,3 +1,4 @@
+import axios from 'axios';
 import { 
   LOGIN_LOADING,
   LOGIN_SUCCESS,
@@ -25,6 +26,9 @@ const authPersistConfig = {
 }
 
 export const userReducer = (state = initialUserState(), action) => {
+  if (state.login.data) {
+    axios.defaults.headers.common['Authorization'] = `Bearer ${state.login.data}`;
+  }
   switch (action.type) {
     case LOGIN_LOADING: 
       return {

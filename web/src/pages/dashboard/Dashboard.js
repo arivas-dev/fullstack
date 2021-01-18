@@ -2,9 +2,18 @@ import { logout } from 'store/actions/userActions';
 import { message } from 'antd';
 import { messages } from 'constants/messages';
 import React from 'react';
+import WelcomeImg from 'assets/img/welcome.svg';
 import { useDispatch } from 'react-redux';
+import { Users } from 'components/users/Users';
 import { Link, Switch, Route, useRouteMatch } from 'react-router-dom';
 import './Dashboard.scss';
+
+const Welcome = () => (
+  <div className="welcome">
+    <img src={WelcomeImg} alt="Welcome" />
+    <h3>Welcome to the dashboard...Explore some options.</h3>
+  </div>
+)
 
 const Dashboard = () => {
   const dispatch = useDispatch();
@@ -33,8 +42,8 @@ const Dashboard = () => {
       </div>
       <div className="dashboard-content">
         <Switch>
-            <Route exact path={path} component={() => <h2>Welcome to the dashboard</h2>} />
-            <Route exact path={`${path}/users`} component={() => <h2>Welcome to the users</h2>} />
+            <Route exact path={path} component={Welcome} />
+            <Route exact path={`${path}/users`} component={Users} />
             <Route exact path={`${path}/products`} component={() => <h2>Welcome to the products</h2>} />
         </Switch>
       </div>

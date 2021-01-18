@@ -20,7 +20,6 @@
     font-size: 16px;
 
     &:hover {
-      cursor: pointer;
       color: $terciary;
     }
   }
@@ -59,6 +58,10 @@
         background: rgba($color: $secondary, $alpha: 0.6);
       }
     }
+
+    &-content {
+      position: relative;
+    }
   }
 
   @include small {
@@ -81,5 +84,29 @@
         height: auto;
       }
     }
+  }
+}
+
+.welcome {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  margin: 2em 0;
+  transform: translateX(-50%) translateY(-60%);
+  text-align: center;
+
+  & > h3 {
+    text-align: center;
+    text-transform: uppercase;
+    color: $dark;
+    font-size: 24px;
+    letter-spacing: 1px;
+    font-weight: bold;
+  }
+
+  & > img {
+    width: 200px;
+    max-width: 100%;
+    margin: .4em 0;
   }
 }

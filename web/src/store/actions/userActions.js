@@ -60,8 +60,12 @@ export const retrieveUsers = ( skip, limit ) => {
     try {
       dispatch(retrieveUsersLoading());
       const response = await axios.get(endpoints.users.retrieve, { skip, limit });
-      const list = response.data;
-      dispatch(retrieveUsersSuccess(list));
+      const { data: { data: list = [] }, meta } = response;
+      const usersList = list.map(user => ({...user.attributes, id: user.id }));
+      dispatch(retrieveUsersSuccess({
+        list: usersList,
+        meta,
+      }));
     } catch (error) {
       const errorText = errorHandler(error.response);
       dispatch(retrieveUsersFailure(errorText));

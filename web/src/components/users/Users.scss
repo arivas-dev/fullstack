@@ -1,0 +1,27 @@
+@import 'src/assets/scss/mixins';
+@import 'src/assets/scss/variables';
+
+.users {
+  width: 95%;
+  margin: auto;
+
+  &-actions {
+    width: 100%;
+    text-align: right;
+    margin: 2em 0;
+
+    .button {
+      margin: 0 .5em;
+    }
+  }
+
+  &-data {
+    margin: 1em 0;
+  }
+
+  @include small {
+    &-actions {
+      text-align: center;
+    }
+  }
+}
