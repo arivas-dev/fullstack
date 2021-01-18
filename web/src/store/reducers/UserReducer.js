@@ -131,11 +131,23 @@ export const userReducer = (state = initialUserState(), action) => {
       }
     
     case UPDATE_USER_SUCCESS:
+      const userList = state.users.data.list;
+      const newList = userList.map(user => {
+        if (user.id !== action.data.id) return user;
+        return {...user, ...action.data};
+      });
+
       return {
         ...state,
         update: {
           ...updateLoadable(state.update, false, undefined),
           data: action.data,
+        },
+        users: {
+          data: {
+            ...state.users.data,
+            list: newList,
+          }
         }
       }
     

@@ -1,5 +1,5 @@
 import { Table, Pagination } from 'antd';
-import { retrieveUsers } from 'store/actions/userActions';
+import { retrieveUsers,registerUser,updateUser } from 'store/actions/userActions';
 import { UserModal } from 'components/userModal/UserModal';
 import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
@@ -18,9 +18,11 @@ export const Users = () => {
     {
       title: ' ',
       align: 'center',
+      dataIndex: 'id',
+      key: 'id',
       render: (text, record) => (
         <div className="control">
-          <label class="radio">
+          <label className="radio">
             <input 
               type="radio" 
               name="user" 
@@ -89,8 +91,15 @@ export const Users = () => {
     }
   }
 
-  const { per_page: perPage = 15, total: pageTotal = 1 } = data.meta || { }
-  const total = perPage * pageTotal;
+  const onSave = user => {
+    dispatch(registerUser(user, currentPage));
+  }
+
+  const onUpdate = user => {
+    dispatch(updateUser({ ...user, id: selectedUser.id }));
+  }
+
+  const { per_page: perPage = 15, total } = data.meta || { }
 
   return (
     <div className="users">
@@ -115,6 +124,7 @@ export const Users = () => {
           dataSource={data.list} 
           columns={columns} 
           pagination={false}
+          rowKey="id" 
           scroll={{ x: 1200 }}
         />
         <div className="users-pagination">

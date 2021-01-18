@@ -9,7 +9,11 @@ import 'utils/axios';
 import './App.css';
 import 'bulma/css/bulma.css'
 
-const Loading = () => <Spin tip="Please wait..." size="large" />
+const Loading = () => (
+  <div style={{ width: '100%', padding: '1em 0', textAlign: 'center' }}>
+    <Spin tip="Please wait..." size="large" />
+  </div>
+);
 
 function App() {
   return (
