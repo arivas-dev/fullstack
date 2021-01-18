@@ -5,6 +5,7 @@ import { Spin } from 'antd';
 import { SystemRoutes } from 'components/sytemRoutes/SystemRoutes';
 import { BrowserRouter as Router, Switch } from 'react-router-dom';
 import React, { Suspense } from 'react';
+import 'utils/axios';
 import './App.css';
 import 'bulma/css/bulma.css'
 

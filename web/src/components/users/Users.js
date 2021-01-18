@@ -89,8 +89,8 @@ export const Users = () => {
     }
   }
 
-  const total = data.meta.per_page * data.meta.total;
-  const perPage = data.meta.per_page || 15;
+  const { per_page: perPage = 15, total: pageTotal = 1 } = data.meta || { }
+  const total = perPage * pageTotal;
 
   return (
     <div className="users">

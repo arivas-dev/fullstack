@@ -3,14 +3,15 @@ axios.defaults.timeout = 30000;
 
 axios.interceptors.response.use(
   (response) => {
-    const responseText = response.response.data && response.response.data.status 
-      ? response.response.data.status
+    const responseText = response.data && response.data.status 
+      ? response.data.status
       : ''; 
     if (
-      response.response.status === 200 &&
+      response.status === 200 &&
       responseText.toUpperCase() === 'TOKEN IS EXPIRED'
     ) {
-      window.location.href = '/login';
+      // window.location.href = '/session-expired';
+      window.location.replace('/session-expired');
     }
     return response;
   },

@@ -12,7 +12,7 @@ export const UserModal = ({ action, visible, setVisible, user }) => {
   };
 
   const handleSubmit = evt => {
-    console.log('SENDING');
+    evt.preventDefault();
   };
 
   return (
