@@ -17,6 +17,9 @@ class JwtAuthController extends Controller
     public function login(Request $request)
     {
         $credentials = $request->only('email', 'password');
+        $myTTL = 5; //minutes
+
+        JWTAuth::factory()->setTTL($myTTL);
 
         $validator = Validator::make($request->all(), [
             'email' => 'required',
@@ -34,6 +37,8 @@ class JwtAuthController extends Controller
         } catch (JWTException $e) {
             return response()->json(['error' => 'Could not create token'], 500);
         }
+       
+
         return response()->json(compact('token'));
     }
 
