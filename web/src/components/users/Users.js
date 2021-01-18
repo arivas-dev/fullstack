@@ -33,7 +33,7 @@ export const Users = () => {
       key: 'id',
       render: (text, record) => (
         <div className="control">
-          <label class="radio">
+          <label className="radio">
             <input 
               type="radio" 
               name="user" 
