@@ -53,8 +53,8 @@ export const retrieveProducts = (skip, limit) => {
   };
 };
 
-export const saveImage = () =>{
-  
+export const saveImage = () => {
+
 }
 export const saveProduct = (product, refreshPage) => {
   return async dispatch => {
@@ -81,7 +81,7 @@ export const saveProduct = (product, refreshPage) => {
 
               product.image = url
 
-              const response = await axios.post(endpoints.products.save, {...product,image: url});
+              const response = await axios.post(endpoints.products.save, { ...product, image: url });
               const newProduct = response.data;
               dispatch(saveProductSuccess(newProduct));
               await dispatch(retrieveProducts(refreshPage));
@@ -101,10 +101,35 @@ export const updateProduct = (product, refreshPage) => {
   return async dispatch => {
     try {
       dispatch(updateProductLoading());
-      const response = await axios.patch(endpoints.products.update(product.id), product);
-      const updatedProduct = response.data;
-      dispatch(updateProductSuccess(updatedProduct));
-      await dispatch(retrieveProducts(refreshPage));
+      //image
+      const uploadTask = storage.ref(`images/${product.image.name}`).put(product.image);
+      await uploadTask.on(
+        "state_changed",
+        snapshot => {
+          const progress = Math.round(
+            (snapshot.bytesTransferred / snapshot.totalBytes) * 100
+          );
+        },
+        error => {
+          console.log(error);
+        },
+        () => {
+          storage
+            .ref("images")
+            .child(product.image.name)
+            .getDownloadURL()
+            .then(async url => {
+
+              product.image = url
+
+              const response = await axios.patch(endpoints.products.update(product.id), product);
+              const updatedProduct = response.data;
+              dispatch(updateProductSuccess(updatedProduct));
+              await dispatch(retrieveProducts(refreshPage));
+            });
+        }
+      );
+
     } catch (error) {
       const errorText = errorHandler(error.response);
       dispatch(updateProductFailure(errorText));
@@ -112,7 +137,7 @@ export const updateProduct = (product, refreshPage) => {
   };
 };
 
-export const deleteProduct = (product,refreshPage) => {
+export const deleteProduct = (product, refreshPage) => {
   return async dispatch => {
     try {
       dispatch(deleteProductLoading());
