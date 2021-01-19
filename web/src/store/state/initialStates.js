@@ -14,4 +14,5 @@ export const initialProductState = () => ({
   save: initLoadable(undefined),
   update: initLoadable(undefined),
   delete: initLoadable(undefined),
+  register: initLoadable(undefined),
 });

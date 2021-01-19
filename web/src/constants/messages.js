@@ -12,5 +12,9 @@ export const messages = {
   "users": {
     "created": "User created successfully",
     "updated": "User updated successfully",
+  },
+  "products": {
+    "created": "Product created successfully",
+    "updated": "Product updated successfully",
   }
 };

@@ -63,7 +63,7 @@ class ProductController extends Controller
     {
         if (Products::where('id', $id)->exists()) {
             $validator = Validator::make($request->all(), [
-                'SKU' => 'required|string|max:255|unique:products',
+                'SKU' => 'required|string|max:255',
                 'name' => 'required|string|max:255',
                 'quantity' => 'required|string',
                 'price' => 'required|string',

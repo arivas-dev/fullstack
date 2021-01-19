@@ -67,13 +67,14 @@ export const saveProduct = (product,refreshPage) => {
   };
 };
 
-export const updateProduct = product => {
+export const updateProduct = (product, refreshPage) => {
   return async dispatch => {
     try {
       dispatch(updateProductLoading());
-      const response = await axios.get(endpoints.products.update(product.id), product);
+      const response = await axios.patch(endpoints.products.update(product.id), product);
       const updatedProduct = response.data;
       dispatch(updateProductSuccess(updatedProduct));
+      await dispatch(retrieveProducts(refreshPage));
     } catch (error) {
       const errorText = errorHandler(error.response);
       dispatch(updateProductFailure(errorText));

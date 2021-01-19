@@ -35,8 +35,8 @@ class UserController extends Controller
         if(User::where('id', $id)->exists()){
             $validator = Validator::make($request->all(), [
                 'name' => 'required|string|max:255',
-                'telephone' => 'required|integer|unique:users',
-                'email' => 'required|string|unique:users',
+                'telephone' => 'required|integer',
+                'email' => 'required|string',
                 'date_of_birth' => 'required|string',
             ]);
 

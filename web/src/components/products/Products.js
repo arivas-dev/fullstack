@@ -1,23 +1,32 @@
 import { Table, Pagination } from 'antd';
-import { retrieveProducts, saveProduct } from 'store/actions/productActions';
+import { retrieveProducts, saveProduct, updateProduct } from 'store/actions/productActions';
 import { ProductModal } from 'components/productModal/ProductModal';
 import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useMessenger } from 'hooks/useMessenger';
-import './Users.scss';
+import { messages } from 'constants/messages';
 
 
 
 
 export const Products = () => {
+    //Local state
     const [currentPage, setCurrentPage] = useState(1);
     const [selected, setSelected] = useState({});
     const [modalOpen, setModalOpen] = useState(false);
     const [modalAction, setModalAction] = useState('New');
+
+    //Redux
     const productsNode = useSelector(s => s.product.products);
-    const [selectedProduct,setSelectProduct] = useState({})
+    const registerNode = useSelector(s => s.product.register);
+    const updateNode = useSelector(s => s.product.update);
     const { isLoading, data, firstFetch } = productsNode;
     const dispatch = useDispatch();
+
+
+    //Messages
+    useMessenger(registerNode, messages.products.created);
+    useMessenger(updateNode, messages.products.updated);
 
 
     const columns = [
@@ -31,7 +40,7 @@ export const Products = () => {
                             type="radio"
                             name="user"
                             checked={record.id === selected.id}
-                            onChange={(e) => { setSelected(record);setSelectProduct(record) }}
+                            onChange={(e) => setSelected(record)}
                         />
                     </label>
                 </div>
@@ -96,6 +105,12 @@ export const Products = () => {
         dispatch(saveProduct(product, currentPage));
     }
 
+    const onUpdate = async (product) => {
+        await dispatch(updateProduct({ ...product, id: selected.id }));
+        setSelected({});
+        setModalOpen(false);
+    }
+
     const { per_page: perPage = 15, total: pageTotal = 1 } = data.meta || {}
     const total = perPage * pageTotal;
 
@@ -134,13 +149,16 @@ export const Products = () => {
                     />
                 </div>
             </div>
+
+
             <ProductModal
                 action={modalAction}
                 setVisible={setModalOpen}
                 visible={modalOpen}
-                user={selected}
+                loading={registerNode.isLoading || updateNode.isLoading}
                 onSave={onSave}
-                selectedProduct={selectedProduct}
+                onUpdate={onUpdate}
+                product={selected}
             />
         </div>
     );
