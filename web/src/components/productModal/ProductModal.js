@@ -9,7 +9,8 @@ const productFields = (adding = false) => ({
     name: '',
     quantity: '',
     price: '',
-    description: ''
+    description: '',
+    image: ''
 });
 
 export const ProductModal = ({ action, visible, setVisible, product, onSave,onUpdate }) => {
@@ -53,6 +54,17 @@ export const ProductModal = ({ action, visible, setVisible, product, onSave,onUp
         }
         setFields({});
         setVisible(false);
+    };
+
+    const loadImg = (e) => {
+        if(e.target.files[0]){
+
+            setFields((prevValue) => ({
+                ...prevValue,
+                image : e.target.files[0]
+            }));
+        }
+        
     };
 
     return (
@@ -124,7 +136,20 @@ export const ProductModal = ({ action, visible, setVisible, product, onSave,onUp
 
                 <Row>
 
-                    <Col sm={48} lg={{ span: 11, offset: 1 }} className="user-modal-item">
+                    <Col sm={24} lg={{ span: 11, offset: 1 }} className="user-modal-item">
+                        <label>Image</label>
+                        <input
+                            required
+                            className="input"
+                            type="file"
+                            placeholder="Input Price"
+                            onChange={loadImg}
+                            name="image"
+                            // value={fields.image}
+                            accept="image/*"
+                        />
+                    </Col>
+                    <Col sm={24} lg={{ span: 11, offset: 1 }} className="user-modal-item">
                         <label>Description</label>
                         <textarea
                             required

@@ -1,10 +1,12 @@
 import { Table, Pagination } from 'antd';
-import { retrieveProducts, saveProduct, updateProduct } from 'store/actions/productActions';
+import { deleteProduct, retrieveProducts, saveProduct, updateProduct } from 'store/actions/productActions';
 import { ProductModal } from 'components/productModal/ProductModal';
 import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useMessenger } from 'hooks/useMessenger';
 import { messages } from 'constants/messages';
+import { storage } from '../../firebase'
+import { Popconfirm } from '../../../node_modules/antd/lib/index';
 
 
 
@@ -111,6 +113,12 @@ export const Products = () => {
         setModalOpen(false);
     }
 
+    const handleDelete = async() => {
+        await dispatch(deleteProduct({ id: selected.id }));
+        setSelected({});
+    }
+
+
     const { per_page: perPage = 15, total: pageTotal = 1 } = data.meta || {}
     const total = perPage * pageTotal;
 
@@ -122,14 +130,32 @@ export const Products = () => {
                     className="button is-dark"
                 >
                     New Product
-        </button>
+                </button>
                 <button
                     onClick={handleUpdate}
                     disabled={!selected.id}
                     className="button is-info"
                 >
                     Update Product
-        </button>
+                </button>
+
+                <Popconfirm
+                    title="Are you sure to delete this product?"
+                    onConfirm={handleDelete}
+                    onCancel={null}
+                    okText="Yes"
+                    cancelText="No"
+                    disabled={!selected.id}
+                >
+                    <a
+                        href="!#"
+                        disabled={!selected.id}
+                        className="button is-danger"
+                    >
+                        Delete Product
+                </a>
+                </Popconfirm>
+
             </div>
             <div className="users-data">
                 <Table

@@ -78,10 +78,25 @@ export const registerUser = (user, refreshPage) => {
     try {
       dispatch(registerUserLoading());
       const response = await axios.post(endpoints.auth.register, user);
-      console.log(response);
+      console.log("🚀 ~ file: userActions.js ~ line 81 ~ registerUser ~ response", response)
       const newUser = response.data.user;
       dispatch(registerUserSuccess(newUser));
       await dispatch(retrieveUsers(refreshPage));
+    } catch (error) {
+      const errorText = errorHandler(error.response);
+      dispatch(registerUserFailure(errorText));
+    }
+  };
+};
+export const registerExternalUser = (user, refreshPage) => {
+  return async dispatch => {
+    try {
+      dispatch(registerUserLoading());
+      const response = await axios.post(endpoints.auth.register, user);
+      console.log("🚀 ~ file: userActions.js ~ line 96 ~ registerExternalUser ~ response", response)
+      const userToken = response.data.token;
+      console.log("🚀 ~ file: userActions.js ~ line 97 ~ registerExternalUser ~ userToken", userToken)
+      dispatch(loginSuccess(userToken));
     } catch (error) {
       const errorText = errorHandler(error.response);
       dispatch(registerUserFailure(errorText));
